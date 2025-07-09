@@ -34,6 +34,7 @@ import { StatusBadgeComponent } from './shared/components/status-badge/status-ba
 })
 export class AppComponent implements OnInit {
   private readonly toast = inject(ToastrService);
+  private readonly STORAGE_KEY = 'tasks';
 
   title = 'task-manager';
   editMode = signal<boolean>(false);
@@ -72,10 +73,10 @@ export class AppComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    const tasksList = localStorage.getItem('tasks')
-    if(tasksList) {
+    const tasksList = localStorage.getItem(this.STORAGE_KEY);
+    if (tasksList) {
       const parsedTaskList = JSON.parse(tasksList);
-      this.taskLists.set(parsedTaskList)
+      this.taskLists.set(parsedTaskList);
     }
   }
 
@@ -90,7 +91,7 @@ export class AppComponent implements OnInit {
       return [...tasks, task];
     });
 
-    localStorage.setItem('task', JSON.stringify(this.taskLists()));
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.taskLists()));
     this.toast.success('Task created successfully', 'Task Created');
   }
 
@@ -103,7 +104,7 @@ export class AppComponent implements OnInit {
 
     this.taskLists.set(newData);
     this.editMode.update((edit) => !edit);
-    localStorage.setItem('task', JSON.stringify(this.taskLists()));
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.taskLists()));
     this.toast.success('Task updated successfully', 'Task Updated');
   }
 
@@ -113,13 +114,23 @@ export class AppComponent implements OnInit {
   }
 
   deleteSelectedTask(id: number) {
-    const updatedData = this.dataSource().filter(
-      (task: ITask) => task.id !== id
-    );
-    this.taskLists.set(updatedData);
+    const shouldDelete = confirm('This action cannot be undone');
 
-    localStorage.setItem('task', JSON.stringify(this.taskLists()));
-    this.toast.success('Task deleted successfully', 'Task Deleted');
+    if (shouldDelete) {
+      const filtered = this.dataSource().filter(
+        (task: ITask) => task.id !== id
+      );
+
+      const reIndexed = filtered.map((task, index) => ({
+        ...task,
+        id: index + 1,
+      }));
+
+      this.taskLists.set(reIndexed);
+
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.taskLists()));
+      this.toast.success('Task deleted successfully', 'Task Deleted');
+    }
   }
 
   filterByPriority(ev: MatSelectChange) {
