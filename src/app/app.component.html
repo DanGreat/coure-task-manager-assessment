@@ -12,7 +12,7 @@
       
       <div>
         <mat-form-field appearance="outline">
-          <mat-label>Priority</mat-label>
+          <mat-label>Filter by priority</mat-label>
           <mat-select placeholder="Filter priority by" (selectionChange)="filterByPriority($event)">
             <mat-option [value]="null">All</mat-option>
             <mat-option [value]="TaskPriority.LOW">Low</mat-option>
@@ -22,7 +22,7 @@
         </mat-form-field>
   
         <mat-form-field appearance="outline">
-          <mat-label>Status</mat-label>
+          <mat-label>Filter by status</mat-label>
           <mat-select placeholder="Filter status by" (selectionChange)="filterByStatus($event)">
             <mat-option [value]="null">All</mat-option>
             <mat-option [value]="TaskStatus.PENDING">Pending</mat-option>
