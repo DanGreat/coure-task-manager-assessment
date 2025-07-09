@@ -1,0 +1,21 @@
+<p
+  [ngClass]="
+    type() === TaskPrority.HIGH
+      ? 'high'
+      : type() === TaskPrority.MEDIUM
+      ? 'medium'
+      : 'low'
+  "
+>
+  <span
+    class="badge"
+    [ngClass]="
+      type() === TaskPrority.HIGH
+        ? 'high'
+        : type() === TaskPrority.MEDIUM
+        ? 'medium'
+        : 'low'
+    "
+  ></span>
+  <span>{{ label() }}</span>
+</p>

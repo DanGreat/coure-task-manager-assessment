@@ -1,0 +1,59 @@
+<form [formGroup]="form()">
+  <header>
+    <h2>{{ form().get('id')?.value ? 'Edit' : 'Create' }} Task</h2>
+    <p>You can create a new task or edit an existing one</p>
+  </header>
+
+  <div class="form-inputs">
+    <mat-form-field appearance="outline" [style.width.%]="100">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" [style.width.%]="100">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" rows="5"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" [style.width.%]="100">
+      <mat-label>Due Date</mat-label>
+      <input
+        matInput
+        readonly
+        [min]="today()"
+        [matDatepicker]="picker"
+        formControlName="due_date"
+      />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <div class="col-2">
+      <mat-form-field appearance="outline" [style.width.%]="100">
+        <mat-label>Priority</mat-label>
+        <mat-select formControlName="priority">
+          <mat-option [value]="TaskPriority.LOW">Low</mat-option>
+          <mat-option [value]="TaskPriority.MEDIUM">Medium</mat-option>
+          <mat-option [value]="TaskPriority.HIGH">High</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" [style.width.%]="100">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          <mat-option [value]="TaskStatus.PENDING">Pending</mat-option>
+          <mat-option [value]="TaskStatus.IN_PROGRESS">Inprogress</mat-option>
+          <mat-option [value]="TaskStatus.COMPLETED">Completed</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <button mat-flat-button (click)="createTask()">
+      {{ form().get('id')?.value ? 'Update' : 'Create' }} Task
+    </button>
+    <button mat-button (click)="clearForm()">Clear</button>
+  </div>
+</form>

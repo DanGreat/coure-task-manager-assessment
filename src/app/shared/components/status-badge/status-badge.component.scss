@@ -1,0 +1,34 @@
+p {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding-inline: 5px;
+    border-radius: 5px;
+    width: fit-content;
+
+    .badge {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+
+        &.pending {
+            background-color: grey;
+        }
+        &.in-progress {
+            background-color: #2793ff;
+        }
+        &.completed {
+            background-color: #18e618;
+        }
+    }
+
+    &.pending {
+        color: grey;
+    }
+    &.in-progress {
+        color: #2793ff;
+    }
+    &.completed {
+        color: #18e618;
+    }
+}

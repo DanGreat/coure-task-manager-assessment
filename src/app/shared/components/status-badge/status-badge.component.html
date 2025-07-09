@@ -1,0 +1,21 @@
+<p
+  [ngClass]="
+    type() === TaskStatus.COMPLETED
+      ? 'completed'
+      : type() === TaskStatus.IN_PROGRESS
+      ? 'in-progress'
+      : 'pending'
+  "
+>
+  <span
+    class="badge"
+    [ngClass]="
+      type() === TaskStatus.COMPLETED
+        ? 'completed'
+        : type() === TaskStatus.IN_PROGRESS
+        ? 'in-progress'
+        : 'pending'
+    "
+  ></span>
+  <span>{{ label() }}</span>
+</p>
